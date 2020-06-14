@@ -4,13 +4,13 @@ const chalk = require('chalk');
 const util = require('util');
 const path = require('path');
 const lstat = util.promisify(fs.lstat);
-const currDir = process.argv[2] || process.cwd();
-fs.readdir(currDir, async (err, filenames) => {
+const targetDir = process.argv[2] || process.cwd();
+fs.readdir(targetDir, async (err, filenames) => {
 	if (err) {
 		console.log(err);
 	}
 	const statPromises = filenames.map((filename) => {
-		return lstat(path.join(currDir, filename));
+		return lstat(path.join(targetDir, filename));
 	});
 	const allStats = await Promise.all(statPromises);
 	allStats.forEach((stats, idx) => {
